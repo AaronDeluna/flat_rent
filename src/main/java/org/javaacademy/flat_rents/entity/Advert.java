@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Advert {
-
     @Id
     private Integer id;
 
