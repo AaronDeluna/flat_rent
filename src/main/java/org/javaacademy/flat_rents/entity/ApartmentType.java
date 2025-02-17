@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RoomsCount {
-    STUDIO("Только комната"),
+public enum ApartmentType {
+    ROOM("Комната"),
     ONE_BEDROOM("1-комнатная"),
     TWO_BEDROOM("2-комнатная"),
     THREE_BEDROOM("3-комнатная"),
