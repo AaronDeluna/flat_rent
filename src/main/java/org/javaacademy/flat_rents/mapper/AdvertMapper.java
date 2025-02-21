@@ -13,6 +13,7 @@ import org.mapstruct.MappingConstants;
 )
 public interface AdvertMapper {
     @Mapping(target = "bookings", ignore = true)
+    @Mapping(target = "apartment", ignore = true)
     Advert toEntity(CreateAdvertDto dto);
     @Mapping(target = "apartmentDto", source = "apartment")
     AdvertDtoRes toResDto(Advert advert);

@@ -9,7 +9,7 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
-        uses = {ClientMapper.class}
+        uses = {ClientMapper.class, AdvertMapper.class}
 )
 public interface BookingMapper {
     @Mapping(target = "client", ignore = true)
