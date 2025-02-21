@@ -6,14 +6,14 @@ import org.javaacademy.flat_rents.dto.advert.CreateAdvertDto;
 import org.javaacademy.flat_rents.dto.client.ClientDto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Builder
 public class BookingDtoRes {
     private Integer id;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private ClientDto clientDto;
     private CreateAdvertDto createAdvertDto;
     private BigDecimal totalCost;
