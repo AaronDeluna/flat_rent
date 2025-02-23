@@ -8,6 +8,9 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ClientMapper {
+
     @Mapping(target = "bookings", ignore = true)
     Client toEntity(ClientDto dto);
+
+    ClientDto toDto(Client entity);
 }

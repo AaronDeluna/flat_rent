@@ -2,16 +2,17 @@ package org.javaacademy.flat_rents.dto.advert;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Data
 @Builder
-public class CreateAdvertDto {
+@Getter
+@Setter
+public class AdvertDtoRq {
     private Integer id;
-    @JsonProperty("price")
-    private BigDecimal pricePerNight;
+    private BigDecimal price;
     @JsonProperty("is_active")
     private Boolean isActive;
     @JsonProperty("apartment_id")
