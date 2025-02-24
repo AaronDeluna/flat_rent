@@ -32,7 +32,7 @@ public class Advert {
     private Integer id;
 
     @Column(nullable = false)
-    private BigDecimal pricePerNight;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private Boolean isActive;

@@ -16,8 +16,7 @@ public class ClientService {
     public ClientDto save(ClientDto clientDto) {
         Client client = clientMapper.toEntity(clientDto);
         clientRepository.save(client);
-        clientDto.setId(client.getId());
-        return clientDto;
+        return clientMapper.toDto(client);
     }
 
 }

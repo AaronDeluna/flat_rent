@@ -20,25 +20,16 @@ import java.time.temporal.ChronoUnit;
 @Service
 @RequiredArgsConstructor
 public class BookingService {
-    private final AdvertRepository advertRepository;
-    private final ClientRepository clientRepository;
     private final BookingRepository bookingRepository;
     private final BookingMapper bookingMapper;
 
     public BookingDtoRes save(BookingDtoRq bookingDtoRq) {
-        Advert advert = advertRepository.findById(bookingDtoRq.getAdvertId()).orElseThrow(
-                () -> new NotFoundException("Обьявление с id: %s не найдено".formatted(bookingDtoRq.getAdvertId()))
-        );
-        Client client = clientRepository.findById(bookingDtoRq.getClientId()).orElseThrow(
-                () -> new NotFoundException("Клиент с id: %s не найден".formatted(bookingDtoRq.getClientId()))
-        );
-
-        Booking booking = bookingMapper.toEntity(bookingDtoRq, client, advert);
+        Booking booking = bookingMapper.toEntityWithRelations(bookingDtoRq);
 
         booking.setTotalCost(calculateBookingPrice(
                 booking.getStartDate(),
                 booking.getEndDate(),
-                advert.getPricePerNight()
+                booking.getAdvert().getPrice()
         ));
         bookingRepository.save(booking);
         return bookingMapper.toDtoRes(booking);
