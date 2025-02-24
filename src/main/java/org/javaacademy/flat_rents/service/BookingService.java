@@ -3,14 +3,9 @@ package org.javaacademy.flat_rents.service;
 import lombok.RequiredArgsConstructor;
 import org.javaacademy.flat_rents.dto.booking.BookingDtoRes;
 import org.javaacademy.flat_rents.dto.booking.BookingDtoRq;
-import org.javaacademy.flat_rents.entity.Advert;
 import org.javaacademy.flat_rents.entity.Booking;
-import org.javaacademy.flat_rents.entity.Client;
-import org.javaacademy.flat_rents.exception.NotFoundException;
 import org.javaacademy.flat_rents.mapper.BookingMapper;
-import org.javaacademy.flat_rents.repository.AdvertRepository;
 import org.javaacademy.flat_rents.repository.BookingRepository;
-import org.javaacademy.flat_rents.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
