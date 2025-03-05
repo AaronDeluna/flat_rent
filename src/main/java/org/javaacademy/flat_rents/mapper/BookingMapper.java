@@ -13,6 +13,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
         uses = {ClientMapper.class, AdvertMapper.class}
@@ -30,8 +32,9 @@ public abstract class BookingMapper {
     public abstract Booking toEntity(BookingDtoRq dtoRq, Client client, Advert advert);
 
     public Booking toEntityWithRelations(BookingDtoRq dtoRq) {
-        Client client = clientRepository.findById(dtoRq.getClientId()).orElseThrow(
-                () -> new NotFoundException("Клиент с id: %s не найден".formatted(dtoRq.getClientId()))
+        Integer clientId = dtoRq.getClient().getId();
+        Client client = clientRepository.findById(clientId).orElseThrow(
+                () -> new NotFoundException("Клиент с id: %s не найден".formatted(clientId))
         );
 
         Advert advert = advertRepository.findById(dtoRq.getAdvertId()).orElseThrow(
@@ -40,6 +43,8 @@ public abstract class BookingMapper {
 
         return toEntity(dtoRq, client, advert);
     }
+
+    public abstract List<BookingDtoRes> toDtoResList(List<Booking> bookingList);
 
     public abstract BookingDtoRes toDtoRes(Booking booking);
 }
