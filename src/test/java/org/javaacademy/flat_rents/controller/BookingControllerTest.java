@@ -37,7 +37,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql(value = "classpath:clean-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class BookingControllerTest {
     private static final LocalDate BOOKING_SUCCESS_START = LocalDate.of(2025, 10, 1);
@@ -224,7 +223,7 @@ class BookingControllerTest {
         assertEquals(bookingDtoRq.getClient().getEmail(), resultBookingDtoRes.getClient().getEmail());
         assertEquals(bookingDtoRq.getClient().getName(), resultBookingDtoRes.getClient().getName());
         assertEquals(0, resultBookingDtoRes.getTotalCost().compareTo(TOTAL_BOOKING_COST));
-        assertEquals(expectedPageContentSize, resPageDto.getSize());
+        assertEquals(expectedPageContentSize, resPageDto.getTotalSize());
 
     }
 

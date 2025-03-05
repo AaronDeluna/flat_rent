@@ -5,7 +5,7 @@ import org.javaacademy.flat_rents.dto.booking.BookingDtoRq;
 import org.javaacademy.flat_rents.entity.Advert;
 import org.javaacademy.flat_rents.entity.Booking;
 import org.javaacademy.flat_rents.entity.Client;
-import org.javaacademy.flat_rents.exception.NotFoundException;
+import org.javaacademy.flat_rents.exception.EntityNotFoundException;
 import org.javaacademy.flat_rents.repository.AdvertRepository;
 import org.javaacademy.flat_rents.repository.ClientRepository;
 import org.mapstruct.Mapper;
@@ -34,11 +34,11 @@ public abstract class BookingMapper {
     public Booking toEntityWithRelations(BookingDtoRq dtoRq) {
         Integer clientId = dtoRq.getClient().getId();
         Client client = clientRepository.findById(clientId).orElseThrow(
-                () -> new NotFoundException("Клиент с id: %s не найден".formatted(clientId))
+                () -> new EntityNotFoundException("Клиент с id: %s не найден".formatted(clientId))
         );
 
         Advert advert = advertRepository.findById(dtoRq.getAdvertId()).orElseThrow(
-                () -> new NotFoundException("Обьявление с id: %s не найдено".formatted(dtoRq.getAdvertId()))
+                () -> new EntityNotFoundException("Обьявление с id: %s не найдено".formatted(dtoRq.getAdvertId()))
         );
 
         return toEntity(dtoRq, client, advert);

@@ -9,10 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.javaacademy.flat_rents.dto.apartment.ApartmentDto;
 import org.javaacademy.flat_rents.service.ApartmentService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,8 +35,9 @@ public class ApartmentController {
             )
     })
     @PostMapping
-    public ResponseEntity<ApartmentDto> create(@RequestBody ApartmentDto apartmentDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(apartmentService.save(apartmentDto));
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApartmentDto create(@RequestBody ApartmentDto apartmentDto) {
+        return apartmentService.save(apartmentDto);
     }
 
 }

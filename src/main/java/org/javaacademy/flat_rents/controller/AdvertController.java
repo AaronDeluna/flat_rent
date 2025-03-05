@@ -12,13 +12,13 @@ import org.javaacademy.flat_rents.dto.advert.AdvertDtoRes;
 import org.javaacademy.flat_rents.dto.advert.AdvertDtoRq;
 import org.javaacademy.flat_rents.service.AdvertService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,8 +49,9 @@ public class AdvertController {
             )
     })
     @PostMapping
-    public ResponseEntity<AdvertDtoRes> create(@RequestBody AdvertDtoRq advertDtoRq) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(advertService.save(advertDtoRq));
+    @ResponseStatus(HttpStatus.CREATED)
+    public AdvertDtoRes create(@RequestBody AdvertDtoRq advertDtoRq) {
+        return advertService.save(advertDtoRq);
     }
 
     @Operation(
@@ -67,9 +68,10 @@ public class AdvertController {
             )
     })
     @GetMapping("/{city}")
-    public ResponseEntity<PageDto<AdvertDtoRes>> getAllByCityName(@PathVariable String city,
-                                                                  @RequestParam Integer page) {
-        return ResponseEntity.ok().body(advertService.findAllByCity(city, page));
+    @ResponseStatus(HttpStatus.OK)
+    public PageDto<AdvertDtoRes> getAllByCityName(@PathVariable String city,
+                                                  @RequestParam Integer page) {
+        return advertService.findAllByCity(city, page);
     }
 
 }

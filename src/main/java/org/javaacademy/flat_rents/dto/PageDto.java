@@ -14,5 +14,5 @@ public class PageDto<T> {
     private Integer countPage;
     private Integer currentPage;
     private Integer maxPageSize;
-    private Long size;
+    private Long totalSize;
 }

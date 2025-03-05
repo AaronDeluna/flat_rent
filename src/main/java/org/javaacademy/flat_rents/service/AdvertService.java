@@ -6,7 +6,7 @@ import org.javaacademy.flat_rents.dto.advert.AdvertDtoRes;
 import org.javaacademy.flat_rents.dto.advert.AdvertDtoRq;
 import org.javaacademy.flat_rents.entity.Advert;
 import org.javaacademy.flat_rents.entity.Apartment;
-import org.javaacademy.flat_rents.exception.NotFoundException;
+import org.javaacademy.flat_rents.exception.EntityNotFoundException;
 import org.javaacademy.flat_rents.mapper.AdvertMapper;
 import org.javaacademy.flat_rents.repository.AdvertRepository;
 import org.javaacademy.flat_rents.repository.ApartmentRepository;
@@ -22,13 +22,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdvertService {
     private static final int PAGE_SIZE = 10;
+    private static final String SORT_BY_PRICE = "price";
+
     private final ApartmentRepository apartmentRepository;
     private final AdvertRepository advertRepository;
     private final AdvertMapper advertMapper;
 
     public AdvertDtoRes save(AdvertDtoRq advertDtoRq) {
         Apartment apartment = apartmentRepository.findById(advertDtoRq.getApartmentId()).orElseThrow(
-                () -> new NotFoundException("Помещение с id: %s не найдено".formatted(advertDtoRq.getApartmentId()))
+                () -> new EntityNotFoundException("Помещение с id: %s не найдено".formatted(advertDtoRq.getApartmentId()))
         );
         Advert advert = advertMapper.toEntity(advertDtoRq, apartment);
         advertRepository.save(advert);
@@ -36,7 +38,7 @@ public class AdvertService {
     }
 
     public PageDto<AdvertDtoRes> findAllByCity(String city, int page) {
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("price").descending());
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by(SORT_BY_PRICE).descending());
         Page<Advert> advertPage = advertRepository.findAllByApartmentCity(city, pageable);
 
         List<AdvertDtoRes> adverts = advertMapper.toDtoResList(advertPage.getContent());

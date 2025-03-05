@@ -12,13 +12,13 @@ import org.javaacademy.flat_rents.dto.booking.BookingDtoRes;
 import org.javaacademy.flat_rents.dto.booking.BookingDtoRq;
 import org.javaacademy.flat_rents.service.BookingService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -49,8 +49,9 @@ public class BookingController {
             )
     })
     @PostMapping
-    public ResponseEntity<BookingDtoRes> create(@RequestBody BookingDtoRq bookingDtoRq) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.save(bookingDtoRq));
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookingDtoRes create(@RequestBody BookingDtoRq bookingDtoRq) {
+        return bookingService.save(bookingDtoRq);
     }
 
     @Operation(
@@ -67,9 +68,10 @@ public class BookingController {
             )
     })
     @GetMapping("/{email}")
-    public ResponseEntity<PageDto<BookingDtoRes>> getAllByEmail(@PathVariable String email,
-                                                                @RequestParam Integer page) {
-        return ResponseEntity.ok().body(bookingService.findAllByEmail(email, page));
+    @ResponseStatus(HttpStatus.OK)
+    public PageDto<BookingDtoRes> getAllByEmail(@PathVariable String email,
+                                                @RequestParam Integer page) {
+        return bookingService.findAllByEmail(email, page);
     }
 
 }
