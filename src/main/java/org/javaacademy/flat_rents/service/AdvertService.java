@@ -30,7 +30,8 @@ public class AdvertService {
 
     public AdvertDtoRes save(AdvertDtoRq advertDtoRq) {
         Apartment apartment = apartmentRepository.findById(advertDtoRq.getApartmentId()).orElseThrow(
-                () -> new EntityNotFoundException("Помещение с id: %s не найдено".formatted(advertDtoRq.getApartmentId()))
+                () -> new EntityNotFoundException(
+                        "Помещение с id: %s не найдено".formatted(advertDtoRq.getApartmentId()))
         );
         Advert advert = advertMapper.toEntity(advertDtoRq, apartment);
         advertRepository.save(advert);

@@ -62,13 +62,15 @@ public class BookingService {
 
     private void checkBookingDateConflict(Booking newBooking) {
         Integer advertId = newBooking.getAdvert().getId();
-        List<Booking> existingBookings = bookingRepository.findAllByAdvertId(advertId);
+        boolean conflictExists = bookingRepository
+                .existsByAdvertIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+                        advertId,
+                        newBooking.getStartDate(),
+                        newBooking.getEndDate()
+                );
 
-        for (Booking booking : existingBookings) {
-            if (!(newBooking.getEndDate().isBefore(booking.getStartDate())
-                    || newBooking.getStartDate().isAfter(booking.getEndDate()))) {
-                throw new DateConflictException(NOT_CORRECT_RESERVED_DATE.formatted(advertId));
-            }
+        if (conflictExists) {
+            throw new DateConflictException(NOT_CORRECT_RESERVED_DATE.formatted(advertId));
         }
     }
 

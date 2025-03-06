@@ -6,10 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    List<Booking> findAllByAdvertId(Integer advertId);
 
     Page<Booking> findAllByClientEmail(String email, Pageable pageable);
+
+    boolean existsByAdvertIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            Integer advertId, LocalDate endDate, LocalDate startDate);
+
 }

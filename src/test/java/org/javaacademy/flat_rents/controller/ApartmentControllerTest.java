@@ -6,7 +6,6 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.javaacademy.flat_rents.dto.apartment.ApartmentDto;
 import org.javaacademy.flat_rents.repository.ApartmentRepository;
@@ -16,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 
 import static io.restassured.RestAssured.given;
