@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
+import java.util.List;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AdvertMapper {
 
@@ -17,5 +19,7 @@ public interface AdvertMapper {
     Advert toEntity(AdvertDtoRq dtoRq, Apartment apartment);
 
     AdvertDtoRes toDtoRes(Advert advert);
+
+    List<AdvertDtoRes> toDtoResList(List<Advert> advertList);
 
 }
