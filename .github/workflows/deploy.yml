@@ -14,16 +14,39 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Устанавливаем Heroku CLI
+      # 2. Устанавливаем JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Используем Java 17
+
+      # 3. Устанавливаем Docker (если используется)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # 4. Собираем и тестируем проект с Maven
+      - name: Build and Test with Maven
+        run: |
+          mvn clean install -DskipTests=false  # Запускаем тесты
+
+      # 5. Устанавливаем Heroku CLI
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      # 3. Логинимся в Heroku Container Registry
+      # 6. Логинимся в Heroku Container Registry
       - name: Login to Heroku Container Registry
         run: echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
 
-      # 4. Собираем и пушим контейнер в Heroku
+      # 7. Собираем Docker-образ (если не использовали Maven для этого)
+      - name: Build Docker image
+        run: docker build -t my-app .
+
+      # 8. Пушим Docker-образ на Heroku
       - name: Build and Push Docker image to Heroku
         run: |
           heroku container:push web --app ${{ secrets.HEROKU_APP_NAME }}
           heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}
+
+      # 9. (Опционально) Перезапуск приложения на Heroku
+      - name: Restart Heroku App
+        run: heroku restart --app ${{ secrets.HEROKU_APP_NAME }}
