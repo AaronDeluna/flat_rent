@@ -14,11 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Устанавливаем JDK 17
+           # 2. Устанавливаем JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: '17'  # Используем Java 17
+          java-version: '17'  # Указываем версию Java
+          distribution: 'adoptopenjdk'  # Указываем дистрибутив (можно использовать 'adoptopenjdk' или 'zulu' и т.д.)
+
 
       # 3. Устанавливаем Docker (если используется)
       - name: Set up Docker Buildx
