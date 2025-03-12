@@ -1,0 +1,35 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main  # Триггерит процесс при пуше в ветку main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Используем Ubuntu для выполнения шагов
+
+    steps:
+      # 1. Клонируем репозиторий
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Настроим Heroku CLI
+      - name: Set up Heroku CLI
+        uses: akshnz/heroku-cli-action@v1
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+
+      # 3. Логинимся в Heroku
+      - name: Login to Heroku
+        run: |
+          echo "machine api.heroku.com" >> ~/.netrc
+          echo "  login $HEROKU_EMAIL" >> ~/.netrc
+          echo "  password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+          chmod 600 ~/.netrc
+
+      # 4. Деплой на Heroku
+      - name: Deploy to Heroku
+        run: |
+          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+          git push heroku main  # Пушим изменения в ветку main на Heroku
