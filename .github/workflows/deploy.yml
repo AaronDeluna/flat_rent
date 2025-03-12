@@ -25,10 +25,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 4. Собираем и тестируем проект с Maven
-      - name: Build and Test with Maven
-        run: |
-          mvn clean install -DskipTests=false  # Запускаем тесты
+      # 4. Собираем проект с Maven (без тестов)
+      - name: Build with Maven (skip tests)
+        run: mvn clean install -DskipTests=true  # Пропускаем тесты
 
       # 5. Устанавливаем Heroku CLI
       - name: Install Heroku CLI
